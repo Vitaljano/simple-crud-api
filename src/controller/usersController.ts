@@ -11,6 +11,8 @@ export async function getUsers(req: http.IncomingMessage, res: http.ServerRespon
     res.end(JSON.stringify(users));
   } catch (err) {
     console.log(err);
+    res.writeHead(CODES.INTERNET_SERVER_ERROR, { 'Content-Type': 'application/JSON' });
+    res.end(JSON.stringify({ message: 'Ups! something was wrong on server...' }));
   }
 }
 
@@ -33,6 +35,8 @@ export async function getUser(req: http.IncomingMessage, res: http.ServerRespons
     }
   } catch (err) {
     console.log(err);
+    res.writeHead(CODES.INTERNET_SERVER_ERROR, { 'Content-Type': 'application/JSON' });
+    res.end(JSON.stringify({ message: 'Ups! something was wrong on server...' }));
   }
 }
 
@@ -56,11 +60,18 @@ export async function createUser(req: http.IncomingMessage, res: http.ServerResp
     });
   } catch (err) {
     console.log(err);
+    res.writeHead(CODES.INTERNET_SERVER_ERROR, { 'Content-Type': 'application/JSON' });
+    res.end(JSON.stringify({ message: 'Ups! something was wrong on server...' }));
   }
 }
 
 export async function updateUser(req: http.IncomingMessage, res: http.ServerResponse, id: string) {
   try {
+    const isValid = uuidValidate(id);
+    if (!isValid) {
+      res.writeHead(CODES.BAD_REQUEST, { 'Content-Type': 'application/JSON' });
+      res.end(JSON.stringify({ message: 'User Id is invalid' }));
+    }
     const user = await Users.findById(id);
     if (!user) {
       res.writeHead(CODES.NOT_FOUND, { 'Content-Type': 'application/JSON' });
@@ -80,6 +91,8 @@ export async function updateUser(req: http.IncomingMessage, res: http.ServerResp
     }
   } catch (err) {
     console.log(err);
+    res.writeHead(CODES.INTERNET_SERVER_ERROR, { 'Content-Type': 'application/JSON' });
+    res.end(JSON.stringify({ message: 'Ups! something was wrong on server...' }));
   }
 }
 
@@ -102,5 +115,7 @@ export async function removeUser(req: http.IncomingMessage, res: http.ServerResp
     }
   } catch (err) {
     console.log(err);
+    res.writeHead(CODES.INTERNET_SERVER_ERROR, { 'Content-Type': 'application/JSON' });
+    res.end(JSON.stringify({ message: 'Ups! something was wrong on server...' }));
   }
 }
