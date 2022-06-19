@@ -5,8 +5,9 @@
   "main": "src/server.js",
   "scripts": {
     "test": "jest",
-    "start:dev": "nodemon dist/bundle.js",
-    "start:build": "webpack --watch"
+    "start:dev": "webpack && nodemon dist/bundle.cjs",
+    "start:build": "webpack && node dist/bundle.cjs",
+    "start:multi": "node src/cluster.mjs"
   },
   "repository": {
     "type": "git",

@@ -5,7 +5,7 @@ module.exports = {
   entry: './src/server.ts',
   target: 'node',
   output: {
-    filename: 'bundle.js',
+    filename: 'bundle.cjs',
     path: path.resolve(__dirname, 'dist'),
   },
   module: {
@@ -18,6 +18,6 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.ts'],
   },
 };
